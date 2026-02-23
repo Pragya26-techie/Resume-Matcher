@@ -7,7 +7,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy  
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['UPLOAD_FOLDER'] = '/tmp'
 
 @app.route("/")
 def matchresume():
@@ -65,11 +65,7 @@ def matcher():
         job_vector = vectors[0]
         resume_vectors = vectors[1:]
         similarities = cosine_similarity([job_vector], resume_vectors)[0]
-        print(job_vector)
-        print("=====")
-        print(resume_vectors)
-        print("=======")
-        print(similarities)
+        
 
         # Get top 3 resumes and their similarity scores
         if len(resumes) == 1:
@@ -98,4 +94,4 @@ def matcher():
 if __name__=="__main__":
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    app.run(debug=True)
+    app.run()
