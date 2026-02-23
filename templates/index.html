@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Matcher</title>
+    <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<style>
+    body{
+        background-color: burlywood;
+    }
+    .container{
+        margin-top: 50px;
+    }
+    .card{
+        padding: 20px;
+        border-radius:10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+    .card-header{
+        background-color:cadetblue;
+        color: white;
+        border-radius: 10px 10px 0 0;
+        padding: 10px 20px;
+    }
+    .card-body{
+        padding: 20px;
+    }
+    .form-group{
+        margin-bottom: 1.5rem;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Job Description and Resume Matcher</h2>
+            </div>
+            <div class="card-body">
+                <form action="/matcher" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="job_desciption">Job Description</label>
+                        <textarea class="form-control" id="job_description" name="job_description" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="resumes">Upload Resume</label>
+                        <p>Please Upload Resumes more than 5...</p>
+                        <input type="file" class="form-control" id="resumes" name="resumes" multiple required accept=".pdf,.docx,.txt">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Match Resume</button>
+                </form>
+                {% if message %}
+                <div>
+                    <p>{{ message }}</p>
+                    <ul>
+                        {% for index in range(top_resumes|length) %}
+                            <li>{{ top_resumes[index] }} (Similarity Score: {{ similarity_scores[index] }})</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.8/js/bootstrap.min.js"></script>
+</body>
+</html>
